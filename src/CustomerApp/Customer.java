@@ -15,12 +15,12 @@ public class Customer {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		String lastName = customerLastName;
-		// String action=;
+
 		String sql = "select * from customers where lastname=" + "\'" + lastName + "\'";
-		// System.out.println("select * from customers where
-		// lastname="+"\'"+lastName+"\'");
-		String printStatement = "Still not working";
+
+		// String printStatement = "Still not working";
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -29,6 +29,7 @@ public class Customer {
 			con = DriverManager.getConnection("jdbc:oracle:thin:ora1/ora1@localhost:1521:orcl");
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
+
 			while (rs.next()) {
 				// printStatement= rs.getString(1);
 				System.out.println("\n" + "Customer: " + rs.getString("Customerid"));
@@ -71,10 +72,14 @@ public class Customer {
 		String zip = NewZip;
 		String state = NewState;
 
-		String sql = "update  customers set streetaddress=" + "\'" + streetAddress + "\'" + " where lastname=" + "\'"
+		String sql = "update  customers set streetaddress=" + "\'" + streetAddress + "\', zipcode=" + "\'" + zip + "\'"
+				+ " where lastname=" + "\'" + lastName + "\'" + " and firstname=" + "\'" + firstName + "\'"
+				+ " and emailaddress=" + "\'" + email + "\'";
+		String sql2 = "update  customers set stateid=(select stateid from states where state=" + "\'" + state + "\'),"
+				+ "cityid=(select cityid from cities where city=" + "\'" + city + "\'),"
+				+ "stateid=(select stateid from states where state=" + "\'" + state + "\')," + " where lastname=" + "\'"
 				+ lastName + "\'" + " and firstname=" + "\'" + firstName + "\'" + " and emailaddress=" + "\'" + email
 				+ "\'";
-
 		String printStatement = "Still not working";
 
 		try {
@@ -84,20 +89,8 @@ public class Customer {
 			con = DriverManager.getConnection("jdbc:oracle:thin:ora1/ora1@localhost:1521:orcl");
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-			// while (rs.next()) {
-			// printStatement= rs.getString(1);
-			// System.out.println("\n"+"Customer: " +
-			// rs.getString("Customerid"));
-			// System.out.println(rs.getString("Title") +
-			// rs.getString("Firstname") + " " + rs.getString("lastname"));
-			// System.out.println(rs.getString("Streetaddress") + "\n" +
-			// rs.getString("zipcode")
-			// + rs.getString("cityid") + " " + rs.getString("stateid"));
-			// System.out.println(rs.getString("emailaddress"));
-			// System.out.println(rs.getString("positionid")+" at
-			// "+rs.getString("companyid"));
+			rs = stmt.executeQuery(sql2);
 
-			// }
 		} catch (SQLException e) {
 			System.err.println("You have enetered an invalid sql statement");
 			e.printStackTrace();
@@ -138,21 +131,7 @@ public class Customer {
 			con = DriverManager.getConnection("jdbc:oracle:thin:ora1/ora1@localhost:1521:orcl");
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-			// while (rs.next()) {
-			// printStatement= rs.getString(1);
-			// System.out.println("\n"+"Customer: " +
-			// rs.getString("Customerid"));
-			// System.out.println(rs.getString("Title") +
-			// rs.getString("Firstname") + " " + rs.getString("lastname"));
-			// System.out.println(rs.getString("Streetaddress") + "\n" +
-			// rs.getString("zipcode")
-			// + rs.getString("cityid") + " " + rs.getString("stateid"));
-			// System.out.println(rs.getString("emailaddress"));
-			// System.out.println(rs.getString("positionid")+" at
-			// "+rs.getString("companyid"));
 
-			// }
-			
 		} catch (SQLException e) {
 			System.err.println("You have enetered an invalid sql statement");
 			e.printStackTrace();

@@ -49,7 +49,7 @@ public class RunCustomerApp {
 			} else if (a.equals("q")) {
 				break;
 			} else {
-				System.err.println("An error has occured." + "You entered an invalid number");
+				System.err.println("An error has occured." + "You entered an invalid statement");
 				break;
 			}
 			System.out.println();
